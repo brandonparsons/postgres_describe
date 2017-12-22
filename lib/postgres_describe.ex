@@ -42,7 +42,7 @@ defmodule PostgresDescribe do
     database: "mydatabase",
     write_dir: "/tmp/db_docs",
     tables: %{
-      pubic: ["table1", "table2"]
+      public: ["table1", "table2"]
     }
   ```
 

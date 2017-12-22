@@ -10,7 +10,7 @@ Add `postgres_describe` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:postgres_describe, "~> 0.1.1"}
+    {:postgres_describe, "~> 0.1"}
   ]
 end
 ```
@@ -38,7 +38,7 @@ config :postgres_describe,
   database: "mydatabase",
   write_dir: "/tmp/db_docs",
   tables: %{
-    pubic: ["table1", "table2"]
+    public: ["table1", "table2"]
   }
 ```
 
