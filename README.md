@@ -36,10 +36,8 @@ Configuration can be provided through your application config under the
 ```elixir
 config :postgres_describe,
   database: "mydatabase",
-  write_dir: "/tmp/db_docs",
-  tables: %{
-    public: ["table1", "table2"]
-  }
+  write_dir: Path.join([System.tmp_dir, "db_docs"]),
+  tables: %{public: ["table1", "table2"]}
 ```
 
 Or through system environment variables.
@@ -53,7 +51,7 @@ config :postgres_describe,
   user: "myuser",
   password: "mypassword",
   database: "mydatabase",
-  write_dir: "/tmp",
+  write_dir: Path.join([System.tmp_dir, "db_docs"]),
   tables: %{
     public: [
       "table_1",

@@ -3,7 +3,7 @@ defmodule PostgresDescribe.Mixfile do
 
   @app     :postgres_describe
   @name    "PostgresDescribe"
-  @version "0.1.2"
+  @version "0.1.3"
   @github  "https://github.com/brandonparsons/#{@app}"
 
   def project do

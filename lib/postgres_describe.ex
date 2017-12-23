@@ -40,7 +40,7 @@ defmodule PostgresDescribe do
   ```elixir
   config :postgres_describe,
     database: "mydatabase",
-    write_dir: "/tmp/db_docs",
+    write_dir: Path.join([System.tmp_dir, "db_docs"]),
     tables: %{
       public: ["table1", "table2"]
     }
@@ -50,7 +50,10 @@ defmodule PostgresDescribe do
 
   """
   def go! do
-    :ok = write_files(get_config())
+    %{write_dir: writing_to} = config = get_config()
+    Mix.shell.info "=== PostgresDescribe: Writing files to #{writing_to} ==="
+    :ok = write_files(config)
+    Mix.shell.info "=== PostgresDescribe: Done ==="
     {:ok, :complete}
   end
 
