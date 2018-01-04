@@ -1,10 +1,10 @@
 defmodule PostgresDescribe.Mixfile do
   use Mix.Project
 
-  @app     :postgres_describe
-  @name    "PostgresDescribe"
-  @version "0.1.3"
-  @github  "https://github.com/brandonparsons/#{@app}"
+  @app :postgres_describe
+  @name "PostgresDescribe"
+  @version "0.1.4"
+  @github "https://github.com/brandonparsons/#{@app}"
 
   def project do
     [
@@ -52,7 +52,6 @@ defmodule PostgresDescribe.Mixfile do
     [
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:cortex, "~> 0.3", only: [:dev, :test]},
-
       {:private, "~> 0.1.1"},
       {:temp, "~> 0.4", only: [:test]}
     ]

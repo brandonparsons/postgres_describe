@@ -51,9 +51,9 @@ defmodule PostgresDescribe do
   """
   def go! do
     %{write_dir: writing_to} = config = get_config()
-    Mix.shell.info "=== PostgresDescribe: Writing files to #{writing_to} ==="
+    Mix.shell().info("=== PostgresDescribe: Writing files to #{writing_to} ===")
     :ok = write_files(config)
-    Mix.shell.info "=== PostgresDescribe: Done ==="
+    Mix.shell().info("=== PostgresDescribe: Done ===")
     {:ok, :complete}
   end
 
@@ -75,27 +75,52 @@ defmodule PostgresDescribe do
   end
 
   private do
-
-    defp write_files(%{host: host, port: port, user: user, password: password,
-                        database: database, write_dir: write_dir,
-                        tables: tables}) do
+    defp write_files(%{
+           host: host,
+           port: port,
+           user: user,
+           password: password,
+           database: database,
+           write_dir: write_dir,
+           tables: tables
+         }) do
       File.mkdir_p!(write_dir)
-      Enum.each tables, fn({schema, table_list}) ->
-        Enum.each table_list, fn(table) ->
+
+      Enum.each(tables, fn {schema, table_list} ->
+        Enum.each(table_list, fn table ->
           content = describe_table(host, port, user, password, database, schema, table)
           write_output(write_dir, schema, table, content)
-        end
-      end
+        end)
+      end)
     end
 
     defp describe_table(host, port, user, password, database, schema, table) do
       port_str = ensure_string(port)
-      {shell_text, 0} = System.cmd "psql", ["-h", host, "-p", port_str, "-U", user, "-d", database, "-c", pg_command(schema, table)], env: env_opt(password)
+
+      {shell_text, 0} =
+        System.cmd(
+          "psql",
+          [
+            "-h",
+            host,
+            "-p",
+            port_str,
+            "-U",
+            user,
+            "-d",
+            database,
+            "-c",
+            pg_command(schema, table)
+          ],
+          env: env_opt(password)
+        )
+
       String.trim_trailing(shell_text)
     end
 
     defp write_output(write_dir, schema, table, output) do
-      dir = Path.join([write_dir, ensure_string(schema)]) # The `tables` configuration could have been provided with atoms or string keys
+      # The `tables` configuration could have been provided with atoms or string keys
+      dir = Path.join([write_dir, ensure_string(schema)])
       File.mkdir_p!(dir)
       file_path = Path.join([dir, table <> ".txt"])
       File.write!(file_path, output)
@@ -104,8 +129,7 @@ defmodule PostgresDescribe do
     defp ensure_string(val) when is_binary(val), do: val
     defp ensure_string(val) when is_atom(val), do: Atom.to_string(val)
     defp ensure_string(val) when is_integer(val), do: Integer.to_string(val)
-
-  end # private blcok
+  end
 
   # Note the double backslash - we want the `\d` postgres command
   defp pg_command(schema, table), do: ~s|\\d "#{schema}"."#{table}";|

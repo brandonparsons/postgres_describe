@@ -1,18 +1,17 @@
 defmodule Mix.Tasks.PostgresDescribe do
-  use Mix.Task
-
-  @shortdoc "Puts output of Postgres describe in a set of files on disk"
-
   @moduledoc """
   Puts output of Postgres describe in a set of files on disk.
 
   Usage:
 
   ```bash
-  $ mix PostgresDescribe
+  $ mix postgres_describe
   ```
 
   """
+
+  use Mix.Task
+  @shortdoc "Puts output of Postgres describe in a set of files on disk"
 
   @doc false
   def run(_), do: PostgresDescribe.go!()

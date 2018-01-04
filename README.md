@@ -20,15 +20,17 @@ And `mix deps.get`.
 ## Basic Usage
 
 The following configuration values are required **at a minimum**:
-- `database`: Your PG database name
-- `write_dir`: Where we should write your description files
-- `tables` (map): Keys are schemas in your database (at a minimum you probably want `public`), and values are lists of table names within that schema
+
+* `database`: Your PG database name
+* `write_dir`: Where we should write your description files
+* `tables` (map): Keys are schemas in your database (at a minimum you probably want `public`), and values are lists of table names within that schema
 
 Additional configuration values you can set:
-- `host`: Your PG host (defaults to `localhost`)
-- `port`: PG port (defaults to `5432`)
-- `user`: Your PG user (defaults to your current username, i.e. `whoami`)
-- `password`: Your PG password (defaults to `nil`)
+
+* `host`: Your PG host (defaults to `localhost`)
+* `port`: PG port (defaults to `5432`)
+* `user`: Your PG user (defaults to your current username, i.e. `whoami`)
+* `password`: Your PG password (defaults to `nil`)
 
 Configuration can be provided through your application config under the
 `postgres_describe` application:
@@ -68,7 +70,7 @@ Once your system is configured, then run the generator from the root of your
 application:
 
 ```bash
-$ mix PostgresDescribe
+$ mix postgres_describe
 ```
 
 Full docs can be found [online](https://hexdocs.pm/postgres_describe).

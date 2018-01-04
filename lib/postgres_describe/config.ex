@@ -1,11 +1,11 @@
 defmodule PostgresDescribe.Config do
-  @moduledoc false
+  @moduledoc """
+  This module handles fetching values from the config with some additional
+  niceties. Sourced from
+  `https://gist.github.com/bitwalker/a4f73b33aea43951fe19b242d06da7b9`
 
-  # This module handles fetching values from the config with some additional
-  # niceties. Sourced from
-  # `https://gist.github.com/bitwalker/a4f73b33aea43951fe19b242d06da7b9`
-  #
-  # MIT license as per author.
+  MIT license as per author.
+  """
 
   @doc """
   Fetches a value from the config, or from the environment if {:system, "VAR"}
@@ -36,13 +36,16 @@ defmodule PostgresDescribe.Config do
           nil -> default
           val -> val
         end
+
       {:system, env_var, preconfigured_default} ->
         case System.get_env(env_var) do
           nil -> preconfigured_default
           val -> val
         end
+
       nil ->
         default
+
       val ->
         val
     end
@@ -55,8 +58,12 @@ defmodule PostgresDescribe.Config do
   @spec get_integer(atom(), atom(), integer()) :: integer
   def get_integer(app, key, default \\ nil) do
     case get(app, key, nil) do
-      nil -> default
-      n when is_integer(n) -> n
+      nil ->
+        default
+
+      n when is_integer(n) ->
+        n
+
       n ->
         case Integer.parse(n) do
           {i, _} -> i
@@ -80,11 +87,13 @@ defmodule PostgresDescribe.Config do
           nil -> raise ArgumentError, message: "Environment variable #{env_var} not set"
           value -> value
         end
+
       {:system, env_var, preconfigured_default} ->
         case System.get_env(env_var) do
           nil -> preconfigured_default
           value -> value
         end
+
       val ->
         val
     end
